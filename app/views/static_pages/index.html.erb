@@ -16,12 +16,16 @@
       var htmlString = "";
 
       $.each(data, function(index,  task) {
-        var liElement = '<li><div class="view"><input class="toggle" type="checkbox"><label>' + 
+        var checkedStatus = task.done ? "checked" : "";
+        var liElement = '<li><div class="view"><input class="toggle" type="checkbox"' + 
+        checkedStatus + 
+        '><label>' + 
           task.title +
+          ' <br> ' +
+          task.description +
           '</label></div></li>';
         htmlString += liElement;
       });
-      console.log(htmlString);
       var ulTodos = $('.todo-list');
       ulTodos.html(htmlString);
     });
