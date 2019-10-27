@@ -2,7 +2,12 @@
   <header class="header">
     <h1>To Do</h1>
     <form id="new-form">
-      <input type="text" class="new-todo" />
+      Title:
+      <input type="text" class="new-todo-title" />
+      <br /><br />
+      Description:
+      <input type="text" class="new-todo-description" />
+      <input type="submit">
     </form>
   </header>
 
@@ -20,8 +25,18 @@
 
     $('#new-form').submit(function(event) {
       event.preventDefault();
-      var textbox = $('.new-todo');
-      console.log("Task: ", textbox.val());
+      var titlebox = $('.new-todo-title');
+      var descripbox = $('.new-todo-description');
+      var payload = {
+        task: {
+          title: titlebox.val(),
+          description: descripbox.val()
+        }
+      };
+      console.log(payload);
+      $.post("/tasks", payload).success(function(data) {
+        console.log("Successful HTTP Request");
+      });
     });
 
     function taskHTML(task){
@@ -39,7 +54,6 @@
 
     function toggleTask(e) {
         var itemID = $(e.target).data("id");
-
         var doneValue = Boolean($(e.target).is(':checked'));
 
         $.post("/tasks/" + itemID, {
